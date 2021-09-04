@@ -42,14 +42,14 @@ public class EstudianteController {
 	}
 	
 	@PutMapping(value = "/actualizar", consumes="application/json")
-	public ResponseEntity<?> actualizarEstudiante(@RequestBody EstudianteDto estudiante) {
-		EstudianteDto est = new EstudianteDto("Sandra","Moreno");
+	public ResponseEntity<?> actualizarEstudiante(@Valid @RequestBody EstudianteDto estudiante) {
+		service.actualizarEstudiante(estudiante);
 		return new ResponseEntity<EstudianteDto>(estudiante, HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/eliminar/{i}")
 	public ResponseEntity<?> eliminarEstudiante(@PathVariable int i) {
-		EstudianteDto estudiante = new EstudianteDto("Sandra","Moreno" + i);
+		service.eliminarEstudiante(i);
 		HttpHeaders header = new HttpHeaders();
 		header.add("Sandris", "Prueba1");
 		return new ResponseEntity<EstudianteDto>(header, HttpStatus.NO_CONTENT);

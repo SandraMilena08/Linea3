@@ -2,8 +2,10 @@
 package cundi.edu.co.controller;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +35,9 @@ public class ProfesorController {
 	@Autowired
 	private IProfesorService service;
 	
-	@GetMapping(value = "/obtener/{number}/{emocion}", produces = "application/json")
-	public ResponseEntity<ProfesorDto> retornarProfesor(@PathVariable ("number") @Min(2) @Max(4)int number,@PathVariable ("emocion") @Size(min=1, max=3) String emocion) {
-		ProfesorDto profesor = service.retornarProfesor(number,emocion);
+	@GetMapping(value = "/obtener/{number}/{emocion}/{email}", produces = "application/json")
+	public ResponseEntity<ProfesorDto> retornarProfesor(@PathVariable ("number") @Min(2) @Max(4)int number,@PathVariable ("emocion") @Size(min=1, max=8) String emocion, @PathVariable ("email") @Size(min=8, max=20) @Email String email) {
+		ProfesorDto profesor = service.retornarProfesor(number,emocion,email);
 		return new ResponseEntity<ProfesorDto>(profesor, HttpStatus.OK);
 	}
 	
@@ -47,13 +49,13 @@ public class ProfesorController {
 	
 	@PutMapping(value = "/actualizar", consumes="application/json")
 	public ResponseEntity<?> actualizarProfesor(@Valid @RequestBody ProfesorDto profesor) {
-		ProfesorDto pro = new ProfesorDto("Milena","461217245","3107553158", (short) 21,"sandra.duarte0806@gmail.com");
+		service.actualizarProfesor(profesor);
 		return new ResponseEntity<ProfesorDto>(profesor, HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value = "/eliminar/{i}")
-	public ResponseEntity<?> eliminarProfesor(@PathVariable int i) {
-		ProfesorDto pro = new ProfesorDto("Milena","461217245","3107553158", (short) (21+i), "sandra.duarte0806@gmail.com");
-		return new ResponseEntity<ProfesorDto>(pro, HttpStatus.NO_CONTENT);
+	@DeleteMapping(value = "/eliminar/{id}")
+	public ResponseEntity<?> eliminarProfesor(@PathVariable("id") @NotNull @Min(1) int id) {
+		service.eliminarProfesor(id);
+		return new ResponseEntity<ProfesorDto>(HttpStatus.NO_CONTENT);
 	}
 }

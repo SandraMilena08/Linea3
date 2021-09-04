@@ -17,20 +17,19 @@ public class EstudianteServiceImpl implements IEstudianteService {
 
 	@Override
 	public void crearEstudiante(EstudianteDto estudiante) {
-		// TODO Auto-generated method stub
+		System.out.println("Entre metodo crear");
 		
 	}
 
 	@Override
 	public void actualizarEstudiante(EstudianteDto estudiante) {
-		// TODO Auto-generated method stub
+		System.out.println("Entre metodo actualizar");
 		
 	}
 
 	@Override
 	public void eliminarEstudiante(int i) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Entre metodo eliminar");
 	}
 
 }

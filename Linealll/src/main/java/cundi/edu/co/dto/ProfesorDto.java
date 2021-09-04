@@ -16,7 +16,7 @@ public class ProfesorDto {
 	private String codigo;
 	@Size(min = 10, max = 10, message = "Ingrese un valor de 10 caracteres")
 	private String celular;
-	@Min(1)
+	@Min(18)
 	@Max(99)
 	private short edad;
 	@Email(message = "Debe ser valido el email")
