@@ -1,5 +1,7 @@
 package cundi.edu.co.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -21,19 +23,35 @@ public class ProfesorDto {
 	private short edad;
 	@Email(message = "Debe ser valido el email")
 	private String email;
-	
+	private List<Materias> materias;
 	ProfesorDto(){
 		
 	}
 	
-	public ProfesorDto(String nombre, String codigo, String celular, short edad, String email) {
+	public ProfesorDto(@NotBlank(message = "EL nombre no puede estar vacio") String nombre,
+			@Size(min = 6, max = 6, message = "Ingrese un valor de 6 caracteres") String codigo,
+			@Size(min = 10, max = 10, message = "Ingrese un valor de 10 caracteres") String celular,
+			@Min(18) @Max(99) short edad, @Email(message = "Debe ser valido el email") String email,
+			List<Materias> materias) {
 		super();
 		this.nombre = nombre;
 		this.codigo = codigo;
 		this.celular = celular;
 		this.edad = edad;
 		this.email = email;
+		this.materias = materias;
 	}
+
+
+	public List<Materias> getMaterias() {
+		return materias;
+	}
+
+
+	public void setMaterias(List<Materias> materias) {
+		this.materias = materias;
+	}
+
 
 	public String getNombre() {
 		return nombre;

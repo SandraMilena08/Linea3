@@ -1,16 +1,26 @@
 package cundi.edu.co.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import cundi.edu.co.dto.EstudianteDto;
+import cundi.edu.co.dto.Materias;
 import cundi.edu.co.service.IEstudianteService;
+import cundi.edu.co.service.IMaterias;
 
 @Service
-public class EstudianteServiceImpl implements IEstudianteService {
-
+@Qualifier("estudiante")
+public class EstudianteServiceImpl implements IEstudianteService, IMaterias {
+	
+	List<Materias> materias = new ArrayList<Materias>();
+	
 	@Override
 	public EstudianteDto retornarEstudiante(int i) {
-		EstudianteDto estudiante = new EstudianteDto("Sandra","Moreno" + i);
+		materias.add(new Materias ("Español"));
+		EstudianteDto estudiante = new EstudianteDto("Sandra","Moreno" + i, materias);
 		return estudiante;
 		
 	}
@@ -30,6 +40,11 @@ public class EstudianteServiceImpl implements IEstudianteService {
 	@Override
 	public void eliminarEstudiante(int i) {
 		System.out.println("Entre metodo eliminar");
+	}
+
+	@Override
+	public int numeroMaterias() {
+		return materias.size();
 	}
 
 }
