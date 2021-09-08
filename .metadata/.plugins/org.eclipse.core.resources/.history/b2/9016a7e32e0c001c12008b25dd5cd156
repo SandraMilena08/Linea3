@@ -1,0 +1,5 @@
+package cundi.edu.co.dto;
+
+public class EstudianteDto {
+
+}

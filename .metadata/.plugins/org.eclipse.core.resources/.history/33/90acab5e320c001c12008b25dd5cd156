@@ -1,0 +1,39 @@
+package cundi.edu.co.controller;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import cundi.edu.co.dto.EstudianteDto;
+
+@RestController
+@RequestMapping("/prueba")
+public class EstudianteController {
+
+	@GetMapping(value = "/obtener/{i}", produces = "application/json")
+	public EstudianteDto retornarEstudiante(@PathVariable int i) {
+		EstudianteDto estudiante = new EstudianteDto("Sandra","Moreno" + i);
+		return estudiante;
+	}
+	
+	@PostMapping(value = "/crear", consumes = "application/json")
+	public void crearEstudiante(@RequestBody EstudianteDto estudiante) {
+		EstudianteDto est = new EstudianteDto("Sandra","Moreno");
+	}
+	
+	@PutMapping(value = "/actualizar", consumes="application/json")
+	public void actualizarEstudiante(@RequestBody EstudianteDto estudiante) {
+		EstudianteDto est = new EstudianteDto("Sandra","Moreno");
+	}
+	
+	@DeleteMapping(value = "/eliminar/{i}")
+	public void eliminarEstudiante(@PathVariable int i) {
+		EstudianteDto estudiante = new EstudianteDto("Sandra","Moreno" + i);
+	}
+}
+

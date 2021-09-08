@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cundi.edu.co.dto.EstudianteDto;
+import cundi.edu.co.exception.ModelNotFoundException;
 import cundi.edu.co.service.IEstudianteService;
 
 @RestController
@@ -30,7 +31,7 @@ public class EstudianteController {
 	private IEstudianteService service;
 	
 	@GetMapping(value = "/obtener/{id}", produces = "application/json")
-	public ResponseEntity<EstudianteDto> retornarEstudiante(@PathVariable ("id") @Min(1) @Max(3) int id) {
+	public ResponseEntity<EstudianteDto> retornarEstudiante(@PathVariable int id) throws ModelNotFoundException {
 		EstudianteDto estudiante = service.retornarEstudiante(id);
 		return new ResponseEntity<EstudianteDto>(estudiante, HttpStatus.OK);
 	}

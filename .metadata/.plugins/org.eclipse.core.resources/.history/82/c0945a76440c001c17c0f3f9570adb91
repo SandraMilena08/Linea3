@@ -1,0 +1,7 @@
+package cundi.edu.co.service.impl;
+
+import cundi.edu.co.service.IProfesorService;
+
+public class ProfesorServiceImpl implements IProfesorService {
+
+}

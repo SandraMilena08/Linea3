@@ -1,0 +1,16 @@
+package cundi.edu.co.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import cundi.edu.co.dto.EstudianteDto;
+
+@RestController
+public class EstudianteController {
+
+	@GetMapping
+	public EstudianteDto retornarEstudiante() {
+		EstudianteDto estudiante = new EstudianteDto("Sandra","Moreno");
+		return estudiante;
+	}
+}

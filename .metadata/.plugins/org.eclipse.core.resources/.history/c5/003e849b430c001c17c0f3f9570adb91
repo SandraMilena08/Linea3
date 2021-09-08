@@ -1,0 +1,9 @@
+package cundi.edu.co.dto;
+
+public class ProfesorDto {
+	
+	private String nombre;
+	private String codigo;
+	private String celular;
+	
+}

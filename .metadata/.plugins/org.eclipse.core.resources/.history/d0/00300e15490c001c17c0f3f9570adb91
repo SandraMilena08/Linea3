@@ -1,0 +1,32 @@
+package cundi.edu.co.service.impl;
+
+import cundi.edu.co.dto.ProfesorDto;
+import cundi.edu.co.service.IProfesorService;
+
+public class ProfesorServiceImpl implements IProfesorService {
+
+	@Override
+	public ProfesorDto retornarProfesor(int i) {
+		ProfesorDto profesor = new ProfesorDto("Sandra","461217245","3107553158", (short) 21);
+		return profesor;
+	}
+
+	@Override
+	public void crearProfesor(ProfesorDto profesor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actualizarProfesor(ProfesorDto profesor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void eliminarProfesor(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

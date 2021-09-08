@@ -1,0 +1,5 @@
+package cundi.edu.co.service;
+
+public interface IProfesorService {
+
+}

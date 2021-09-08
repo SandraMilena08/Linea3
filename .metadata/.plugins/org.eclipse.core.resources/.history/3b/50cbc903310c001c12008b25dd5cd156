@@ -1,0 +1,19 @@
+package cundi.edu.co.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import cundi.edu.co.dto.EstudianteDto;
+
+@RestController
+@RequestMapping("/prueba")
+public class EstudianteController {
+
+	@GetMapping(value = "/obtener/{i}", produces = "application/json")
+	public EstudianteDto retornarEstudiante(@PathVariable int i) {
+		EstudianteDto estudiante = new EstudianteDto("Sandra","Moreno" + i);
+		return estudiante;
+	}
+}

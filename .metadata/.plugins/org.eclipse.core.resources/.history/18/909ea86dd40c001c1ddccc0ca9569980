@@ -1,0 +1,35 @@
+package cundi.edu.co.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import cundi.edu.co.dto.ProfesorDto;
+import cundi.edu.co.service.IProfesorService;
+
+@Service
+public class ProfesorServiceImpl implements IProfesorService {
+	
+	
+	@Override
+	public ProfesorDto retornarProfesor(int i) {
+		ProfesorDto profesor = new ProfesorDto("Sandra","461217245","3107553158", (short) (21 + i), "sandra.duarte0806@gmail.com");
+		return profesor;
+	}
+
+	@Override
+	public void crearProfesor(ProfesorDto profesor) {
+		ProfesorDto prof = new ProfesorDto("Sandra","461217245","3107553158", (short) (21 + i), "sandra.duarte0806@gmail.com");
+	}
+
+	@Override
+	public void actualizarProfesor(ProfesorDto profesor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void eliminarProfesor(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

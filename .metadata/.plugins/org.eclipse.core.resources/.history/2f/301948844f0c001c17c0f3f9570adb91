@@ -1,0 +1,58 @@
+package cundi.edu.co.dto;
+
+public class ProfesorDto {
+	
+	@Size(min = 4, max = 8, message="Debe tener min 4 max 8")
+	private String nombre;
+	private String codigo;
+	private String celular;
+	private short edad;
+	
+	ProfesorDto(){
+		
+	}
+	
+	public ProfesorDto(String nombre, String codigo, String celular, short edad) {
+		super();
+		this.nombre = nombre;
+		this.codigo = codigo;
+		this.celular = celular;
+		this.edad = edad;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
+	public short getEdad() {
+		return edad;
+	}
+
+	public void setEdad(short edad) {
+		this.edad = edad;
+	}
+
+	
+	
+	
+}
