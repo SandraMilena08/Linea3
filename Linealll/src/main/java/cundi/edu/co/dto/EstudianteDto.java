@@ -1,5 +1,7 @@
 package cundi.edu.co.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 
 public class EstudianteDto {
@@ -7,17 +9,28 @@ public class EstudianteDto {
 	private String nombre;
 	@NotBlank(message = "EL apellido no puede estar vacio")
 	private String apellido;
+	private List<Materias> materias;
 	
 	EstudianteDto(){
 		
 	}
 	
-	public EstudianteDto (String nombre, String apellido) {
+	public EstudianteDto(@NotBlank(message = "EL nombre no puede estar vacio") String nombre,
+			@NotBlank(message = "EL apellido no puede estar vacio") String apellido, List<Materias> materias) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
-		
+		this.materias = materias;
 	}
+
+	public List<Materias> getMaterias() {
+		return materias;
+	}
+
+	public void setMaterias(List<Materias> materias) {
+		this.materias = materias;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
