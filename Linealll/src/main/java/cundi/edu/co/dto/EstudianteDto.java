@@ -3,11 +3,19 @@ package cundi.edu.co.dto;
 import java.util.List;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class EstudianteDto {
+	
+	@ApiModelProperty(notes = "Nombre de Estudiante",name="nombre", required=true)
 	@NotBlank(message = "EL nombre no puede estar vacio")
+	@Size(min = 6, max = 15, message = "Ingrese un valor entre 6 y 15 caracteres")
 	private String nombre;
+	@ApiModelProperty(notes = "Nombre de Estudiante",name="apellido", required=true)
 	@NotBlank(message = "EL apellido no puede estar vacio")
+	@Size(min = 6, max = 15, message = "Ingrese un valor entre 6 y 15 caracteres")
 	private String apellido;
 	private List<Materias> materias;
 	

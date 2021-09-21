@@ -1,4 +1,3 @@
-//Paquetes
 package cundi.edu.co.controller;
 
 import javax.validation.Valid;
@@ -11,7 +10,6 @@ import javax.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
-//Librerias
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cundi.edu.co.dto.ProfesorDto;
+import cundi.edu.co.exception.ExceptionWrapper;
 import cundi.edu.co.service.IMaterias;
 import cundi.edu.co.service.IProfesorService;
 import io.swagger.annotations.Api;
@@ -49,7 +48,7 @@ public class ProfesorController {
             ,notes = "Este servicio traera los profesores que estan en el sistema")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = ProfesorDto.class ),
-            @ApiResponse(code = 400, message = "Bad Request, sucedio un error", response = String.class),
+            @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping(value = "/obtener/{number}/{emocion}/{email}", produces = "application/json")
 	public ResponseEntity<ProfesorDto> retornarProfesor(@PathVariable ("number") @Min(2) @Max(4)int number,@PathVariable ("emocion") @Size(min=1, max=8) String emocion, @PathVariable ("email") @Size(min=8, max=20) @Email String email) {
@@ -63,8 +62,8 @@ public class ProfesorController {
 	@ApiOperation(value = "Crear profesores"
             ,notes = "Este servicio se encarga de crear a los profesores que se desean ingresar")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Creado", response = ProfesorDto.class ),
-            @ApiResponse(code = 400, message = "Bad Request, sucedio un error", response = String.class),
+            @ApiResponse(code = 201, message = "Created(creado)", response = ProfesorDto.class ),
+            @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error", response = ExceptionWrapper.class ),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@PostMapping(value = "/crear", consumes = "application/json")
 	public ResponseEntity<?> crearProfesor(@Valid @RequestBody ProfesorDto profesor) {
@@ -76,7 +75,7 @@ public class ProfesorController {
             ,notes = "Este servicio se encarga de actualizar profesores")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = ProfesorDto.class ),
-            @ApiResponse(code = 400, message = "Bad Request, sucedio un error", response = String.class),
+            @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@PutMapping(value = "/actualizar", consumes="application/json")
 	public ResponseEntity<?> actualizarProfesor(@Valid @RequestBody ProfesorDto profesor) {
@@ -87,8 +86,8 @@ public class ProfesorController {
 	@ApiOperation(value = "Eliminar profesores"
             ,notes = "Este servicio se encarga de eliminar profesores")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "No_Content", response = ProfesorDto.class ),
-            @ApiResponse(code = 400, message = "Bad Request, sucedio un error", response = String.class),
+            @ApiResponse(code = 204, message = "No Content(No contenido)", response = ProfesorDto.class ),
+            @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@DeleteMapping(value = "/eliminar/{id}")
 	public ResponseEntity<?> eliminarProfesor(@PathVariable("id") @NotNull @Min(1) int id) {

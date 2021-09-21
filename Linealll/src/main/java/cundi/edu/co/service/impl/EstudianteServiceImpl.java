@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import cundi.edu.co.dto.EstudianteDto;
 //import cundi.edu.co.exception.ModelNotFoundException;
 import cundi.edu.co.dto.Materias;
+import cundi.edu.co.exception.ModelNotFoundException;
 import cundi.edu.co.service.IEstudianteService;
 import cundi.edu.co.service.IMaterias;
 
@@ -48,10 +49,10 @@ public class EstudianteServiceImpl implements IEstudianteService, IMaterias {
 		return materias.size();
 	}
 	
-	/*public EstudianteDto retornarEstudiante(int i) throws ModelNotFoundException {
+	public EstudianteDto retornarEstudianteException(int i) {
 	try {
 		if (i<= 10){
-			EstudianteDto estudiante = new EstudianteDto("Sandra","Moreno" + i);
+			EstudianteDto estudiante = new EstudianteDto("Sandra","Moreno" + i, materias);
 			return estudiante;
 		}else {
 			throw new ModelNotFoundException("Estudiante no encontrado");
@@ -62,17 +63,7 @@ public class EstudianteServiceImpl implements IEstudianteService, IMaterias {
 	}
 	return null;
 	
-		try {
-			int x = 0;
-			int a = 5/x;
-			
-		}catch(ArithmeticException e) {
-			
-			throw new ArithmeticException("No se puede dividar en 0");
-		}
 		
-		return null;
-		
-	}*/
+	}
 
 }

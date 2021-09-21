@@ -18,9 +18,10 @@ public class SwaggerConfig {
     @Bean
     public Docket api() { 
         return new Docket(DocumentationType.SWAGGER_2)  
+          .useDefaultResponseMessages(false)
           .apiInfo(apiInfo())
           .select()                                  
-          .apis(RequestHandlerSelectors.any())              
+          .apis(RequestHandlerSelectors.basePackage("cundi.edu.co.controller"))              
           .paths(PathSelectors.any())                          
           .build();    	
         
