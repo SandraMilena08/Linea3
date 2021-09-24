@@ -10,6 +10,9 @@ public class ExceptionWrapper {
 		private String message;
 		private String path;
 		
+		public ExceptionWrapper() {
+		}
+		
 		public ExceptionWrapper(int status, String error, String message, String path) {
 			this.timestamp = LocalTime.now();
 			this.status = status;

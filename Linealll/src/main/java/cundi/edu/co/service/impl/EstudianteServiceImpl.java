@@ -49,21 +49,5 @@ public class EstudianteServiceImpl implements IEstudianteService, IMaterias {
 		return materias.size();
 	}
 	
-	public EstudianteDto retornarEstudianteException(int i) {
-	try {
-		if (i<= 10){
-			EstudianteDto estudiante = new EstudianteDto("Sandra","Moreno" + i, materias);
-			return estudiante;
-		}else {
-			throw new ModelNotFoundException("Estudiante no encontrado");
-		}
-	} catch (ModelNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	return null;
-	
-		
-	}
 
 }

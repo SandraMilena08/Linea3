@@ -50,8 +50,8 @@ public class EstudianteController {
             @ApiResponse(code = 400, message = "Bad Request, sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping(value = "/obtener/{id}", produces = "application/json")
-	public ResponseEntity<?> retornarEstudiante(@PathVariable("id") @NotNull @Min(1) int id) throws ModelNotFoundException, Exception {
-		EstudianteDto estudiante;
+	public ResponseEntity<?> retornarEstudiante(@PathVariable ("id") @NotNull @Min(1) int id){
+			EstudianteDto estudiante;
 			estudiante = service.retornarEstudiante(id);
 			serviceMaterias.numeroMaterias();
 			HttpHeaders header = new HttpHeaders();
