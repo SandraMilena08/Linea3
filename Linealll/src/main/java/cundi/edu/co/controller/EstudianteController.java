@@ -7,6 +7,9 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,13 +53,18 @@ public class EstudianteController {
             @ApiResponse(code = 400, message = "Bad Request, sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping(value = "/obtener/{id}", produces = "application/json")
-	public ResponseEntity<?> retornarEstudiante(@PathVariable ("id") @NotNull @Min(1) int id){
+	public EntityModel<EstudianteDto> retornarEstudiante(@PathVariable ("id") @NotNull @Min(1) int id){
 			EstudianteDto estudiante;
 			estudiante = service.retornarEstudiante(id);
 			serviceMaterias.numeroMaterias();
 			HttpHeaders header = new HttpHeaders();
 	        header.add("materias", Integer.toString(serviceMaterias.numeroMaterias()) );
-	        return new ResponseEntity<EstudianteDto>( estudiante, header, HttpStatus.OK);
+	        //Hateoas
+	        Link link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EstudianteController.class).retornarEstudiante(id)).withSelfRel();
+	        EstudianteDto dto = service.retornarEstudiante(id);
+	        dto.add(link);
+	        
+	        return EntityModel.of(dto);
 		
 	}
 	

@@ -5,9 +5,11 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import io.swagger.annotations.ApiModelProperty;
 
-public class EstudianteDto {
+public class EstudianteDto extends RepresentationModel<EstudianteDto> {
 	
 	@ApiModelProperty(notes = "Nombre de Estudiante",name="nombre", required=true)
 	@NotBlank(message = "EL nombre no puede estar vacio")

@@ -9,6 +9,9 @@ import javax.validation.constraints.Size;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cundi.edu.co.dto.EstudianteDto;
 import cundi.edu.co.dto.ProfesorDto;
 import cundi.edu.co.exception.ExceptionWrapper;
 import cundi.edu.co.service.IMaterias;
@@ -51,12 +55,16 @@ public class ProfesorController {
             @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping(value = "/obtener/{number}/{emocion}/{email}", produces = "application/json")
-	public ResponseEntity<ProfesorDto> retornarProfesor(@PathVariable ("number") @Min(2) @Max(4)int number,@PathVariable ("emocion") @Size(min=1, max=8) String emocion, @PathVariable ("email") @Size(min=8, max=20) @Email String email) {
+	public EntityModel<ProfesorDto> retornarProfesor(@PathVariable ("number") @Min(2) @Max(4)int number,@PathVariable ("emocion") @Size(min=1, max=8) String emocion, @PathVariable ("email") @Size(min=8, max=20) @Email String email) {
 		ProfesorDto profesor = service.retornarProfesor(number,emocion,email);
 		serviceMaterias.numeroMaterias();
 		HttpHeaders header = new HttpHeaders();
         header.add("materias", Integer.toString(serviceMaterias.numeroMaterias()) );
-        return new ResponseEntity<ProfesorDto>( profesor, header, HttpStatus.OK);
+        //Hateoas
+        Link link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ProfesorController.class).retornarProfesor(number, emocion, email)).withSelfRel();
+        ProfesorDto dto = service.retornarProfesor(number, emocion, email);
+        dto.add(link);
+        return EntityModel.of(dto);
 	}
 	
 	@ApiOperation(value = "Crear profesores"
