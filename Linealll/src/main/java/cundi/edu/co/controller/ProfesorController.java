@@ -55,11 +55,14 @@ public class ProfesorController {
             @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@GetMapping(value = "/obtener/{number}/{emocion}/{email}", produces = "application/json")
+	
 	public EntityModel<ProfesorDto> retornarProfesor(@PathVariable ("number") @Min(2) @Max(4)int number,@PathVariable ("emocion") @Size(min=1, max=8) String emocion, @PathVariable ("email") @Size(min=8, max=20) @Email String email) {
 		ProfesorDto profesor = service.retornarProfesor(number,emocion,email);
+		
 		serviceMaterias.numeroMaterias();
 		HttpHeaders header = new HttpHeaders();
         header.add("materias", Integer.toString(serviceMaterias.numeroMaterias()) );
+       
         //Hateoas
         Link link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ProfesorController.class).retornarProfesor(number, emocion, email)).withSelfRel();
         ProfesorDto dto = service.retornarProfesor(number, emocion, email);
@@ -74,9 +77,15 @@ public class ProfesorController {
             @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error", response = ExceptionWrapper.class ),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@PostMapping(value = "/crear", consumes = "application/json")
-	public ResponseEntity<?> crearProfesor(@Valid @RequestBody ProfesorDto profesor) {
-		service.crearProfesor(profesor);
-		return new ResponseEntity<ProfesorDto>(profesor, HttpStatus.CREATED);
+	
+	public EntityModel<?> crearProfesor(@Valid @RequestBody ProfesorDto profesor) {
+		service.crearProfesor();
+		
+		//Hateoas
+        Link link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ProfesorController.class).crearProfesor(profesor)).withSelfRel();
+        ProfesorDto dto = service.crearProfesor();
+        dto.add(link);
+        return EntityModel.of(dto);
 	}
 	
 	@ApiOperation(value = "Actualizar profesores"
@@ -86,9 +95,15 @@ public class ProfesorController {
             @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@PutMapping(value = "/actualizar", consumes="application/json")
-	public ResponseEntity<?> actualizarProfesor(@Valid @RequestBody ProfesorDto profesor) {
-		service.actualizarProfesor(profesor);
-		return new ResponseEntity<ProfesorDto>(profesor, HttpStatus.OK);
+	
+	public EntityModel<?> actualizarProfesor(@Valid @RequestBody ProfesorDto profesor) {
+		service.actualizarProfesor();
+		
+		//Hateoas
+        Link link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ProfesorController.class).actualizarProfesor(profesor)).withSelfRel();
+        ProfesorDto dto = service.actualizarProfesor();
+        dto.add(link);
+        return EntityModel.of(dto);
 	}
 	
 	@ApiOperation(value = "Eliminar profesores"
