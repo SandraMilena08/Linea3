@@ -73,10 +73,8 @@ public class ExceptionHandle extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		ex.printStackTrace();
-		System.out.println("Entro1");
 		ExceptionWrapper ew = new ExceptionWrapper(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.toString(), 
-				ex.getMessage(), request.getDescription(false));
+				"Error en la estructura del JSON", request.getDescription(false));
 		return new ResponseEntity<Object>(ew, HttpStatus.BAD_REQUEST);	
 	}
 
@@ -89,7 +87,7 @@ public class ExceptionHandle extends ResponseEntityExceptionHandler {
 		System.out.println(ex.getErrorCount());
 		
 		for(int i = 0 ; i < ex.getErrorCount(); i++) {
-			mensaje = mensaje + ex.getFieldErrors().get(i).getField() + " : " + ex.getFieldErrors().get(i).getDefaultMessage();
+			mensaje = mensaje + " " + ex.getFieldErrors().get(i).getField() + " : " + ex.getFieldErrors().get(i).getDefaultMessage();
 		}
 	
 		ExceptionWrapper ew = new ExceptionWrapper(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.toString(), 
@@ -101,9 +99,10 @@ public class ExceptionHandle extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleMissingPathVariable(MissingPathVariableException ex, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
-		System.out.println("ENTRO");
-		// TODO Auto-generated method stub
-		return super.handleMissingPathVariable(ex, headers, status, request);
+		ex.printStackTrace();
+		ExceptionWrapper ew = new ExceptionWrapper(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), 
+				ex.getMessage(), request.getDescription(false));
+		return new ResponseEntity<Object>(ew, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	//Escritura mal en URL

@@ -98,7 +98,7 @@ public class EstudianteController {
             @ApiResponse(code = 204, message = "No Content", response = EstudianteDto.class ),
             @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
-	@DeleteMapping(value = "/eliminar/{id}")
+	@DeleteMapping(value = "/eliminar/{idUno}")
 	public ResponseEntity<?> eliminarEstudiante(@PathVariable("id") @NotNull @Min(1) int id) {
 		service.eliminarEstudiante(id);
 		HttpHeaders header = new HttpHeaders();
