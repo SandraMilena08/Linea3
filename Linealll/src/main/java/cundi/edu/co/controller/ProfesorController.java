@@ -79,13 +79,14 @@ public class ProfesorController {
 	@PostMapping(value = "/crear", consumes = "application/json")
 	
 	public EntityModel<?> crearProfesor(@Valid @RequestBody ProfesorDto profesor) {
-		service.crearProfesor();
+		service.crearProfesor(profesor);
 		
 		//Hateoas
         Link link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ProfesorController.class).crearProfesor(profesor)).withSelfRel();
-        ProfesorDto dto = service.crearProfesor();
+        ProfesorDto dto = service.crearProfesor(profesor);
         dto.add(link);
         return EntityModel.of(dto);
+		//return new ResponseEntity<ProfesorDto>(profesor, HttpStatus.CREATED);
 	}
 	
 	@ApiOperation(value = "Actualizar profesores"
@@ -97,11 +98,11 @@ public class ProfesorController {
 	@PutMapping(value = "/actualizar", consumes="application/json")
 	
 	public EntityModel<?> actualizarProfesor(@Valid @RequestBody ProfesorDto profesor) {
-		service.actualizarProfesor();
+		service.actualizarProfesor(profesor);
 		
 		//Hateoas
         Link link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ProfesorController.class).actualizarProfesor(profesor)).withSelfRel();
-        ProfesorDto dto = service.actualizarProfesor();
+        ProfesorDto dto = service.actualizarProfesor(profesor);
         dto.add(link);
         return EntityModel.of(dto);
 	}
@@ -116,5 +117,7 @@ public class ProfesorController {
 	public ResponseEntity<?> eliminarProfesor(@PathVariable("id") @NotNull @Min(1) int id) {
 		service.eliminarProfesor(id);
 		return new ResponseEntity<ProfesorDto>(HttpStatus.NO_CONTENT);
+		
+		
 	}
 }

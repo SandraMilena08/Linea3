@@ -6,7 +6,7 @@ import cundi.edu.co.dto.ProfesorDto;
 
 public interface IProfesorService {
 	public ProfesorDto retornarProfesor(int number, String emocion, String correo);
-	public ProfesorDto crearProfesor();
-	public ProfesorDto actualizarProfesor();
+	public ProfesorDto crearProfesor(ProfesorDto profesor);
+	public ProfesorDto actualizarProfesor(ProfesorDto profesor);
 	public void eliminarProfesor(int id);
 }

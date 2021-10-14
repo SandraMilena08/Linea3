@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -24,9 +26,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cundi.edu.co.dto.EstudianteDto;
+import cundi.edu.co.exception.ArgumentRequiredException;
+import cundi.edu.co.exception.ConflicException;
 import cundi.edu.co.exception.ExceptionWrapper;
 import cundi.edu.co.exception.ModelNotFoundException;
 import cundi.edu.co.dto.ProfesorDto;
+import cundi.edu.co.entity.Estudiante;
 import cundi.edu.co.service.IEstudianteService;
 import cundi.edu.co.service.IMaterias;
 import io.swagger.annotations.Api;
@@ -68,6 +73,25 @@ public class EstudianteController {
 		
 	}
 	
+	@GetMapping(value = "/obtenerPaginado/{page}/{size}" ,produces = "application/json")
+	public ResponseEntity<?> retonarPaginado(@PathVariable int page, @PathVariable int size) {
+		Page<Estudiante> listaEstudiante = service.retornarPaginado(page, size);
+		return new ResponseEntity<Page<Estudiante>>(listaEstudiante, HttpStatus.OK);	
+	}	
+	
+	@GetMapping(value = "/obtenerPaginado" ,produces = "application/json")
+	public ResponseEntity<?> retonarPaginado(Pageable page) {
+		Page<Estudiante> listaEstudiante = service.retornarPaginado(page);
+		return new ResponseEntity<Page<Estudiante>>(listaEstudiante, HttpStatus.OK);	
+	}	
+	
+	@GetMapping(value = "/obtenerPorId/{idEstudiante}" ,produces = "application/json")
+	public ResponseEntity<?> retonarPorId(@PathVariable int idEstudiante) throws ModelNotFoundException {
+		Estudiante estudainte = service.retonarPorId(idEstudiante);
+		return new ResponseEntity<Estudiante>(estudainte, HttpStatus.OK);	
+	}		
+		
+	
 	@ApiOperation(value = "Crear estudiantes"
             ,notes = "Este servicio se encarga de crear a los estudiantes que se desean ingresar")
     @ApiResponses(value = {
@@ -75,9 +99,9 @@ public class EstudianteController {
             @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@PostMapping(value = "/crear", consumes = "application/json")
-	public ResponseEntity<?> crearEstudiante(@Valid @RequestBody EstudianteDto estudiante) {
+	public ResponseEntity<?> crearEstudiante(@Valid @RequestBody Estudiante estudiante) throws ConflicException {
 		service.crearEstudiante(estudiante);
-		return new ResponseEntity<EstudianteDto>(estudiante, HttpStatus.CREATED);
+		return new ResponseEntity<Estudiante>(estudiante, HttpStatus.CREATED);
 	}
 	
 	@ApiOperation(value = "Actualizar estudiantes"
@@ -87,9 +111,9 @@ public class EstudianteController {
             @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	@PutMapping(value = "/actualizar", consumes="application/json")
-	public ResponseEntity<?> actualizarEstudiante(@Valid @RequestBody EstudianteDto estudiante) {
+	public ResponseEntity<?> actualizarEstudiante(@Valid @RequestBody Estudiante estudiante) throws ArgumentRequiredException, ModelNotFoundException, ConflicException{
 		service.actualizarEstudiante(estudiante);
-		return new ResponseEntity<EstudianteDto>(estudiante, HttpStatus.OK);
+		return new ResponseEntity<Estudiante>(estudiante, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "Eliminar estudiantes"
@@ -98,8 +122,8 @@ public class EstudianteController {
             @ApiResponse(code = 204, message = "No Content", response = EstudianteDto.class ),
             @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
-	@DeleteMapping(value = "/eliminar/{idUno}")
-	public ResponseEntity<?> eliminarEstudiante(@PathVariable("id") @NotNull @Min(1) int id) {
+	@DeleteMapping(value = "/eliminar/{id}")
+	public ResponseEntity<?> eliminarEstudiante(@PathVariable("id") @NotNull @Min(1) int id) throws ModelNotFoundException {
 		service.eliminarEstudiante(id);
 		HttpHeaders header = new HttpHeaders();
 		header.add("Sandris", "Prueba1");

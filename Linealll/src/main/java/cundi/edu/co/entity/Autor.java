@@ -1,39 +1,57 @@
 package cundi.edu.co.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "estudiante")
-public class Estudiante {
+@Table(name="autor")
+public class Autor {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotNull(message = "El nombre no puede estar vacia")
+	@Size(min = 2, max = 50, message = "Ingrese un valor entre 2 y 30 caracteres")
 	@Column(name="nombre", length=15, nullable = false)
 	private String nombre;
 	
+	@NotNull(message = "La cedula no puede estar vacia")
+	@Size(min = 2, max = 10, message = "Ingrese un valor entre 2 y 30 caracteres")
 	@Column(name="cedula", length=10, nullable = false, unique = true)
 	private String cedula;
 	
+	@NotNull(message = "El apellido no puede estar vacia")
+	@Size(min = 2, max = 50, message = "Ingrese un valor entre 2 y 30 caracteres")
 	@Column(name="apellido", length=15, nullable = false)
 	private String apellido;
 	
+	@NotNull(message = "El correo no puede estar vacia")
+	@Size(min = 2, max = 50, message = "Ingrese un valor entre 2 y 30 caracteres")
+	@Email
 	@Column(name="correo", length=60, nullable = false, unique = true)
 	private String correo;
+
+	@OneToMany(mappedBy = "autor", cascade = (CascadeType.ALL), orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<Libro> libro;
 	
-	public Estudiante() {
+	public Autor() {
 		
 	}
-	
-	public Estudiante(Integer id, String nombre, String cedula , String apellido, String correo) {
+	public Autor(String nombre, String cedula, String apellido, String correo) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.cedula = cedula;
 		this.apellido = apellido;
@@ -56,6 +74,14 @@ public class Estudiante {
 		this.nombre = nombre;
 	}
 
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+
 	public String getApellido() {
 		return apellido;
 	}
@@ -71,15 +97,6 @@ public class Estudiante {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-
-	public String getCedula() {
-		return cedula;
-	}
-
-	public void setCedula(String cedula) {
-		this.cedula = cedula;
-	}
-	
 	
 	
 }

@@ -24,14 +24,14 @@ public class ProfesorServiceImpl implements IProfesorService, IMaterias {
 		return profesor;
 	}
 
-	@Override
-	public void crearProfesor(ProfesorDto profesor) {
+	public ProfesorDto crearProfesor(ProfesorDto profesor) {
 		System.out.println("Entre metodo crear");
+		return profesor;
 	}
 
-	@Override
-	public void actualizarProfesor(ProfesorDto profesor) {
+	public ProfesorDto actualizarProfesor(ProfesorDto profesor) {
 		System.out.println("Entre metodo actualizar");
+		return profesor;
 		
 	}
 
@@ -44,5 +44,6 @@ public class ProfesorServiceImpl implements IProfesorService, IMaterias {
 	public int numeroMaterias() {
 		return materias.size();
 	}
+
 
 }

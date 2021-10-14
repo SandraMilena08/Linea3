@@ -29,6 +29,24 @@ public class ExceptionHandle extends ResponseEntityExceptionHandler {
 				e.getMessage(), request.getDescription(false));
 		return new ResponseEntity<ExceptionWrapper>(ew, HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(ArgumentRequiredException.class)
+	public final ResponseEntity<ExceptionWrapper>manejadorConflicException(ArgumentRequiredException e, 
+			WebRequest request){
+		e.printStackTrace();
+		ExceptionWrapper ew= new ExceptionWrapper(HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT.toString(), 
+				e.getMessage(), request.getDescription(false));
+		return new ResponseEntity<ExceptionWrapper>(ew, HttpStatus.CONFLICT);
+	}
+	
+	@ExceptionHandler(ConflicException.class)
+	public final ResponseEntity<ExceptionWrapper>manejadorConflicException(ConflicException e, 
+			WebRequest request){
+		e.printStackTrace();
+		ExceptionWrapper ew= new ExceptionWrapper(HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT.toString(), 
+				e.getMessage(), request.getDescription(false));
+		return new ResponseEntity<ExceptionWrapper>(ew, HttpStatus.CONFLICT);
+	}
 
 	//Se divide por 0 
 	@ExceptionHandler(ArithmeticException.class)
