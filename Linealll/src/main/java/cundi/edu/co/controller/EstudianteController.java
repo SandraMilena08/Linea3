@@ -32,6 +32,7 @@ import cundi.edu.co.exception.ExceptionWrapper;
 import cundi.edu.co.exception.ModelNotFoundException;
 import cundi.edu.co.dto.ProfesorDto;
 import cundi.edu.co.entity.Estudiante;
+import cundi.edu.co.service.IAutorService;
 import cundi.edu.co.service.IEstudianteService;
 import cundi.edu.co.service.IMaterias;
 import io.swagger.annotations.Api;
@@ -45,14 +46,15 @@ import io.swagger.annotations.ApiResponses;
 @Api(description="Servicios de Estudiante")
 public class EstudianteController {
 	
+	/*
 	@Autowired
-	private IEstudianteService service;
+	private IAutorService service;
 	@Autowired
 	@Qualifier("estudiante")
 	private IMaterias serviceMaterias;
 	
-	@ApiOperation(value = "Obtener estudiantes"
-            ,notes = "Este servicio traera los estudiantes que estan en el sistema")
+	@ApiOperation(value = "Obtener autores"
+            ,notes = "Este servicio traera los autores que estan en el sistema")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = EstudianteDto.class ),
             @ApiResponse(code = 400, message = "Bad Request, sucedio un error"),
@@ -129,5 +131,6 @@ public class EstudianteController {
 		header.add("Sandris", "Prueba1");
 		return new ResponseEntity<EstudianteDto>(header, HttpStatus.NO_CONTENT);
 	}
+	*/
 }
 

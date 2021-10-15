@@ -8,6 +8,6 @@ import cundi.edu.co.entity.Autor;
 
 
 @Repository
-public interface IAutorRepo extends JpaRepository<Autor, Integer> {
+public interface IAutorRepository extends JpaRepository<Autor, Integer> {
 
 }
