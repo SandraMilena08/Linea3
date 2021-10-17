@@ -1,11 +1,14 @@
 package cundi.edu.co.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -47,29 +50,21 @@ public class AutorController {
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
 	
 	@GetMapping(value = "/obtener/{id}", produces = "application/json")
-	public ResponseEntity<?> ObtenerAutoresId(@PathVariable int id) throws ModelNotFoundException{
+	public ResponseEntity<?> ObtenerAutoresId(@PathVariable Integer id) throws ModelNotFoundException{
 		return ResponseEntity.ok(service.retonarPorId(id));
 	}
-		
+	
 	@GetMapping(value = "/obtenerPaginado/{page}/{size}" ,produces = "application/json")
 	public ResponseEntity<?> retonarPaginado(@PathVariable int page, @PathVariable int size) {
 		Page<Autor> listaAutor = service.retornarPaginado(page, size);
 		return new ResponseEntity<Page<Autor>>(listaAutor, HttpStatus.OK);	
 	}	
-	
-	/*
+		
 	@GetMapping(value = "/obtenerPaginado" ,produces = "application/json")
 	public ResponseEntity<?> retonarPaginado(Pageable page) {
 		Page<Autor> listaAutor = service.retornarPaginado(page);
 		return new ResponseEntity<Page<Autor>>(listaAutor, HttpStatus.OK);	
 	}
-	*/	
-	
-	@GetMapping(value = "/obtenerPorId/{idAutor}" ,produces = "application/json")
-	public ResponseEntity<?> retonarPorId(@PathVariable int idAutor) throws ModelNotFoundException {
-		Autor autor = service.retonarPorId(idAutor);
-		return new ResponseEntity<Autor>(autor, HttpStatus.OK);	
-	}		
 		
 	
 	@ApiOperation(value = "Crear Autores"
@@ -90,6 +85,7 @@ public class AutorController {
             @ApiResponse(code = 200, message = "OK. El recurso se obtiene correctamente", response = AutorDto.class ),
             @ApiResponse(code = 400, message = "Bad Request(solicitud incorrecta), sucedio un error"),
             @ApiResponse(code = 500, message = "Error inesperado del sistema") })
+	
 	@PutMapping(value = "/actualizar", consumes="application/json")
 	public ResponseEntity<?> actualizarAutor(@Valid @RequestBody Autor autor) throws ArgumentRequiredException, ModelNotFoundException, ConflicException{
 		service.editar(autor);

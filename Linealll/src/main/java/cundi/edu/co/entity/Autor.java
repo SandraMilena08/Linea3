@@ -2,6 +2,8 @@ package cundi.edu.co.entity;
 
 import java.util.List;
 
+
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,7 +46,7 @@ public class Autor {
 	@Column(name="correo", length=60, nullable = false, unique = true)
 	private String correo;
 
-	@OneToMany(mappedBy = "autor", cascade = (CascadeType.ALL), orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "autor", cascade = { CascadeType.ALL}, fetch = FetchType.LAZY)
 	private List<Libro> libro;
 	
 	public Autor() {
