@@ -17,6 +17,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="autor")
 public class Autor {
@@ -47,6 +49,7 @@ public class Autor {
 	private String correo;
 
 	@OneToMany(mappedBy = "autor", cascade = { CascadeType.ALL}, fetch = FetchType.LAZY)
+	@JsonBackReference
 	private List<Libro> libro;
 	
 	public Autor() {

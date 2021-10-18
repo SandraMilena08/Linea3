@@ -1,11 +1,8 @@
 package cundi.edu.co.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import cundi.edu.co.dto.AutorDto;
 import cundi.edu.co.entity.Autor;
@@ -66,6 +64,14 @@ public class AutorController {
 		return new ResponseEntity<Page<Autor>>(listaAutor, HttpStatus.OK);	
 	}
 		
+	@GetMapping(value = "/buscarCedula")
+	public ResponseEntity<?> buscar(@RequestParam String filtro) {
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(service.buscarCedula(filtro));
+		}catch (Exception e){
+			return null;
+			}
+	}
 	
 	@ApiOperation(value = "Crear Autores"
             ,notes = "Este servicio se encarga de crear a los autores que se desean ingresar")
@@ -78,6 +84,8 @@ public class AutorController {
 		service.crear(autor);
 		return new ResponseEntity<Autor>(autor, HttpStatus.CREATED);
 	}
+	
+	
 	
 	@ApiOperation(value = "Actualizar autores"
             ,notes = "Este servicio se encarga de actualizar autores")

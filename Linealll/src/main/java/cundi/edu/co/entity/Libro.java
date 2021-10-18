@@ -1,5 +1,7 @@
 package cundi.edu.co.entity;
 
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -9,9 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -21,6 +28,23 @@ public class Libro {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(name = "REGIST_DATE", updatable = false, nullable = false)
+	@Temporal(TemporalType.DATE)
+	private Calendar fechaRegistro;
+	
+	public Libro(Integer id, Calendar fechaRegistro,
+			@NotNull(message = "Nombre es obligatorio") @Size(min = 3, max = 50, message = "El nombre debe estar entre 3 y 50 caracteres") String nombre,
+			@NotNull(message = "descripcion es obligatorio") @Size(min = 3, max = 50, message = "la descripcion debe estar entre 3 y 50 caracteres") String descripcion,
+			@NotNull(message = "numero es obligatorio") Integer numeroPaginas, Autor autor) {
+		super();
+		this.id = id;
+		this.fechaRegistro = fechaRegistro;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.numeroPaginas = numeroPaginas;
+		this.autor = autor;
+	}
+
 	@NotNull(message = "Nombre es obligatorio")
 	@Size(min = 3, max = 50, message = "El nombre debe estar entre 3 y 50 caracteres")
 	@Column(name = "nombre", length = 50, nullable = false)
@@ -37,17 +61,19 @@ public class Libro {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_autor", nullable = false, foreignKey = @ForeignKey(name = "FK_Autor_Libro"))
+	@JsonBackReference
 	private Autor autor;
 	
 	public Libro() {
 		super();
 	}
 
-	public Libro(String nombre, String descripcion, Integer numeroPaginas) {
-		super();
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.numeroPaginas = numeroPaginas;
+	public Calendar getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(Calendar fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
 	}
 
 	public Integer getId() {

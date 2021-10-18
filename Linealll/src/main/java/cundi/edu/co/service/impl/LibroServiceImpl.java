@@ -28,38 +28,50 @@ public class LibroServiceImpl implements ILibroService{
 
 	@Override
 	public Page<Libro> retornarPaginado(Pageable page) {
-		// TODO Auto-generated method stub
-		return null;
+		return repo.findAll(page);
 	}
 
 	@Override
 	public Libro retonarPorId(Integer idEntity) throws ModelNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		return repo.findById(idEntity).orElseThrow(() -> new ModelNotFoundException("Libro no encontrado"));
 	}
 
 	@Override
 	public List<Libro> obtener() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Libro> libros = repo.findAll();
+		return libros;
 	}
 
 	@Override
 	public void crear(Libro entity) throws ConflicException {
-		// TODO Auto-generated method stub
-		
+		repo.save(entity);
 	}
 
 	@Override
 	public void editar(Libro entity) throws ArgumentRequiredException, ModelNotFoundException, ConflicException {
-		// TODO Auto-generated method stub
-		
+		repo.save(entity);
 	}
 
 	@Override
 	public void eliminar(int idEntity) throws ModelNotFoundException {
-		// TODO Auto-generated method stub
+		if(validarExistenciaPorId(idEntity)) {
+			repo.deleteById(idEntity);
+		}else {
+			throw new ModelNotFoundException("Libro no encontrado");
+		}
 		
 	}
+	
+	private Boolean validarExistenciaPorId(int idLibro) {
+		return repo.existsById(idLibro);
+	}
+
+	@Override
+	public List<Libro> buscarAutor(int id) {
+		return repo.buscarAutor(id);
+	}
+
+
+
 
 }

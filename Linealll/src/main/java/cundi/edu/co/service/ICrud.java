@@ -4,10 +4,11 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import cundi.edu.co.entity.Autor;
 import cundi.edu.co.exception.ArgumentRequiredException;
 import cundi.edu.co.exception.ConflicException;
 import cundi.edu.co.exception.ModelNotFoundException;
+
+
 
 
 public interface ICrud<T, ID> {
