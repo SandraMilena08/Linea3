@@ -12,7 +12,6 @@ import cundi.edu.co.exception.ConflicException;
 import cundi.edu.co.exception.ModelNotFoundException;
 import cundi.edu.co.repository.IAutorRepository;
 import cundi.edu.co.service.IAutorService;
-import javassist.NotFoundException;
 
 @Service
 public class AutorServiceImpl implements IAutorService {
@@ -37,6 +36,21 @@ public class AutorServiceImpl implements IAutorService {
 
 	@Override
 	public void editar(Autor entity) throws ArgumentRequiredException, ModelNotFoundException, ConflicException {
+		
+		Autor autorAux = repo.findByCedula(entity.getCedula());
+		if(autorAux != null) {
+			if(entity.getId() != autorAux.getId()) {
+				throw new  ConflicException("La cedula ya existe");
+			}
+		}
+		
+		Autor autorAuxCorreo = repo.findByCorreo(entity.getCorreo());
+		if(autorAuxCorreo != null) {
+			if(entity.getId() != autorAuxCorreo.getId()) {
+				throw new  ConflicException("El correo ya existe");
+			}
+		}
+		
 		repo.save(entity);
 	}
 
@@ -51,7 +65,11 @@ public class AutorServiceImpl implements IAutorService {
 
 	@Override
 	public void crear(Autor entity) throws ConflicException {
-		 this.repo.save(entity);
+		if(repo.existsByCedulaAndCorreo(entity.getCedula(),entity.getCorreo())) {
+			throw new ConflicException("Cedula o correo ya existen");
+		}else {
+			this.repo.save(entity);
+		}
 	}
 
 	@Override

@@ -29,8 +29,7 @@ public class EstudianteServiceImpl implements IEstudianteService, IMaterias {
 	
 	@Autowired
 	private IRepositoryEstudiante repo;
-	
-	//No se usa, solo para el ejemplo
+
 		@Override
 		public List<Estudiante> retornarTodo() {
 			return repo.findAll();
@@ -56,9 +55,7 @@ public class EstudianteServiceImpl implements IEstudianteService, IMaterias {
 
 	@Override
 	public void crearEstudiante(Estudiante estudiante) throws ConflicException {
-		//Estudiante estudianteBusqueda = repo.findByCedula(estudiante.getCedula());
-		//if(estudianteBusqueda != null)
-			//throw new ConflicException("Cedula ya existe");
+	
 			if(repo.existsByCedula(estudiante.getCedula()))
 				throw new ConflicException("Cedula ya existe");
 			
@@ -71,6 +68,7 @@ public class EstudianteServiceImpl implements IEstudianteService, IMaterias {
 
 	@Override
 	public void actualizarEstudiante(Estudiante estudiante) throws ArgumentRequiredException, ModelNotFoundException, ConflicException  {
+		
 		if(estudiante.getId() != null) {
 			if(validarExistenciaPorId(estudiante.getId())) {
 				

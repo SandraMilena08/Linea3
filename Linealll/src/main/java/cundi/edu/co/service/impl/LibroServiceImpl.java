@@ -44,7 +44,16 @@ public class LibroServiceImpl implements ILibroService{
 
 	@Override
 	public void crear(Libro entity) throws ConflicException {
-		repo.save(entity);
+		
+		    if(repo.existsByNombre(entity.getNombre()))
+			throw new ConflicException("el libro ya existe");
+		
+			int numPag = entity.getNumeroPaginas();
+	        if(numPag<=0) {
+	            throw new ConflicException("El libro no tiene paginas");
+	        }else {
+	        	repo.save(entity);  
+	        }
 	}
 
 	@Override

@@ -86,7 +86,6 @@ public class AutorController {
 	}
 	
 	
-	
 	@ApiOperation(value = "Actualizar autores"
             ,notes = "Este servicio se encarga de actualizar autores")
     @ApiResponses(value = {

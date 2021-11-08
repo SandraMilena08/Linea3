@@ -18,10 +18,9 @@ public interface IAutorRepository extends JpaRepository<Autor, Integer> {
 	
 	public Autor findByCorreo(String correo);
 	
-	public Boolean existsByCedula(String cedula);
+	public Boolean existsByCedulaAndCorreo(String cedula, String correo);
 	
 	public Boolean existsByCorreo(String correo);
-	
 	
 	@Query(
 			value = "SELECT * FROM autor WHERE autor.cedula LIKE %:filtro%",
